@@ -2,7 +2,7 @@
 title: "Viz2"
 ---
 
-install.packages("usethis")```{r setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
