@@ -4,7 +4,7 @@ navbar:
   title: "My Website"
   left:
     - text: "Home"
-      href: Home.html
+      href: index.html
     - text: "Visualization 1"
       href: Viz1.html
     - text: "Visualization 2"
