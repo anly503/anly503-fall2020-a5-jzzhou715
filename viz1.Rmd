@@ -1,6 +1,5 @@
 ---
 title: "Visualization 1"
-
 ---
 
 ```{r setup, include=FALSE}
