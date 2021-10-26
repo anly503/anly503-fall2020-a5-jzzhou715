@@ -6,6 +6,6 @@ navbar:
     - text: "Home"
       href: index.html
     - text: "Visualization 1"
-      href: viz1.html
+      href: Viz1.html
     - text: "Visualization 2"
       href: Viz2.html
