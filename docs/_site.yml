@@ -1,6 +1,7 @@
-name: "my-website"
+name: "A5"
+output_dir: "docs"
 navbar:
-  title: "My Website"
+  title: "A5"
   left:
     - text: "Home"
       href: Home.html
