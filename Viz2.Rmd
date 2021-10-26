@@ -1,0 +1,13 @@
+---
+title: "Viz2"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r showChoro1, echo=FALSE}
+htmltools::includeHTML("viz_2.html")
+```
+
+
