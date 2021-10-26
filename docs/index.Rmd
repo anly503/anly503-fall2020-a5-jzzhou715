@@ -1,9 +1,0 @@
----
-title: "My Website"
----
-
-Hello, World!
-
-For Visulization 1, I am trying to explore the Tablet Energy Consumption, the bar plot will help answer the questoin, what are the frequency of different levels of consumptions throughout the day?
-
-For visuilzation 2, I planed to dig dipper into the problem in an attempt to answer the question what percentage of the day is the tablet on high consumption?

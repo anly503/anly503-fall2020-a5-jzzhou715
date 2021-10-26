@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Viz2</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Home.html">Home</a>
+</li>
+<li>
+  <a href="Viz1.html">Visualization 1</a>
+</li>
+<li>
+  <a href="Viz2.html">Visualization 2</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Viz2</h1>
+
+</div>
+
+
+<p>install.packages(“usethis”)<code>{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)</code></p>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"name": "data-8f02c68994a046815f3498aae7d3b193"}, "mark": "line", "encoding": {"x": {"type": "nominal", "field": "Date"}, "y": {"type": "quantitative", "field": "Percentage"}}, "selection": {"select_range_start": {"type": "single", "fields": ["date"], "bind": {"input": "date"}, "init": {"date": "2012-06-27"}}, "select_range_end": {"type": "single", "fields": ["date"], "bind": {"input": "date"}, "init": {"date": "2013-01-31"}}}, "transform": [{"filter": "((datum.Date >= select_range_start.date) && (datum.Date <= select_range_end.date))"}], "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json", "datasets": {"data-8f02c68994a046815f3498aae7d3b193": [{"Missing Value": 5, "Low": 5, "Medium": 172, "High": 36, "Date": "2012-06-27", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 4, "Medium": 169, "High": 40, "Date": "2012-06-28", "Percentage": 0.18779342723004694}, {"Missing Value": 5, "Low": 3, "Medium": 175, "High": 35, "Date": "2012-06-29", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 5, "Medium": 178, "High": 30, "Date": "2012-06-30", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 3, "Medium": 174, "High": 36, "Date": "2012-07-01", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 2, "Medium": 168, "High": 43, "Date": "2012-07-02", "Percentage": 0.20187793427230047}, {"Missing Value": 5, "Low": 6, "Medium": 171, "High": 35, "Date": "2012-07-03", "Percentage": 0.1650943396226415}, {"Missing Value": 5, "Low": 3, "Medium": 172, "High": 37, "Date": "2012-07-04", "Percentage": 0.17452830188679244}, {"Missing Value": 5, "Low": 174, "Medium": 39, "High": 5, "Date": "2012-07-05", "Percentage": 0.022935779816513763}, {"Missing Value": 5, "Low": 2, "Medium": 174, "High": 37, "Date": "2012-07-06", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 4, "Medium": 161, "High": 48, "Date": "2012-07-07", "Percentage": 0.22535211267605634}, {"Missing Value": 5, "Low": 5, "Medium": 181, "High": 27, "Date": "2012-07-08", "Percentage": 0.1267605633802817}, {"Missing Value": 5, "Low": 1, "Medium": 180, "High": 32, "Date": "2012-07-09", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 2, "Medium": 176, "High": 35, "Date": "2012-07-10", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 3, "Medium": 180, "High": 30, "Date": "2012-07-11", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 4, "Medium": 172, "High": 37, "Date": "2012-07-12", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 5, "Medium": 173, "High": 35, "Date": "2012-07-13", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 5, "Medium": 173, "High": 35, "Date": "2012-07-14", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 2, "Medium": 179, "High": 32, "Date": "2012-07-15", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 6, "Medium": 173, "High": 33, "Date": "2012-07-16", "Percentage": 0.15566037735849056}, {"Missing Value": 5, "Low": 2, "Medium": 171, "High": 40, "Date": "2012-07-17", "Percentage": 0.18779342723004694}, {"Missing Value": 5, "Low": 4, "Medium": 177, "High": 31, "Date": "2012-07-18", "Percentage": 0.14622641509433962}, {"Missing Value": 5, "Low": 4, "Medium": 179, "High": 30, "Date": "2012-07-19", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 3, "Medium": 170, "High": 40, "Date": "2012-07-20", "Percentage": 0.18779342723004694}, {"Missing Value": 5, "Low": 2, "Medium": 174, "High": 37, "Date": "2012-07-21", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 3, "Medium": 170, "High": 40, "Date": "2012-07-22", "Percentage": 0.18779342723004694}, {"Missing Value": 5, "Low": 7, "Medium": 173, "High": 33, "Date": "2012-07-23", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 4, "Medium": 169, "High": 40, "Date": "2012-07-24", "Percentage": 0.18779342723004694}, {"Missing Value": 5, "Low": 2, "Medium": 181, "High": 30, "Date": "2012-07-25", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 5, "Medium": 174, "High": 34, "Date": "2012-07-26", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 3, "Medium": 174, "High": 36, "Date": "2012-07-27", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 5, "Medium": 171, "High": 37, "Date": "2012-07-28", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 6, "Medium": 172, "High": 35, "Date": "2012-07-29", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 7, "Medium": 176, "High": 29, "Date": "2012-07-30", "Percentage": 0.13679245283018868}, {"Missing Value": 5, "Low": 3, "Medium": 176, "High": 34, "Date": "2012-07-31", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 3, "Medium": 178, "High": 32, "Date": "2012-08-01", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 9, "Medium": 167, "High": 37, "Date": "2012-08-02", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 2, "Medium": 179, "High": 32, "Date": "2012-08-03", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 1, "Medium": 168, "High": 44, "Date": "2012-08-04", "Percentage": 0.20657276995305165}, {"Missing Value": 5, "Low": 6, "Medium": 168, "High": 39, "Date": "2012-08-05", "Percentage": 0.18309859154929578}, {"Missing Value": 5, "Low": 4, "Medium": 182, "High": 27, "Date": "2012-08-06", "Percentage": 0.1267605633802817}, {"Missing Value": 5, "Low": 5, "Medium": 183, "High": 25, "Date": "2012-08-07", "Percentage": 0.11737089201877934}, {"Missing Value": 5, "Low": 183, "Medium": 30, "High": 5, "Date": "2012-08-08", "Percentage": 0.022935779816513763}, {"Missing Value": 5, "Low": 2, "Medium": 176, "High": 35, "Date": "2012-08-09", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 1, "Medium": 178, "High": 34, "Date": "2012-08-10", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 177, "High": 32, "Date": "2012-08-11", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 3, "Medium": 177, "High": 33, "Date": "2012-08-12", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 4, "Medium": 178, "High": 31, "Date": "2012-08-13", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 1, "Medium": 183, "High": 29, "Date": "2012-08-14", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 7, "Medium": 177, "High": 28, "Date": "2012-08-15", "Percentage": 0.1320754716981132}, {"Missing Value": 5, "Low": 3, "Medium": 183, "High": 26, "Date": "2012-08-16", "Percentage": 0.12264150943396226}, {"Missing Value": 5, "Low": 2, "Medium": 179, "High": 32, "Date": "2012-08-17", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 6, "Medium": 170, "High": 37, "Date": "2012-08-18", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 8, "Medium": 174, "High": 31, "Date": "2012-08-19", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 7, "Medium": 173, "High": 33, "Date": "2012-08-20", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 4, "Medium": 181, "High": 28, "Date": "2012-08-21", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 5, "Medium": 171, "High": 37, "Date": "2012-08-22", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 3, "Medium": 167, "High": 43, "Date": "2012-08-23", "Percentage": 0.20187793427230047}, {"Missing Value": 5, "Low": 4, "Medium": 183, "High": 26, "Date": "2012-08-24", "Percentage": 0.12206572769953052}, {"Missing Value": 5, "Low": 3, "Medium": 179, "High": 31, "Date": "2012-08-25", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 7, "Medium": 169, "High": 37, "Date": "2012-08-26", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 2, "Medium": 187, "High": 24, "Date": "2012-08-27", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 4, "Medium": 185, "High": 23, "Date": "2012-08-28", "Percentage": 0.10849056603773585}, {"Missing Value": 5, "Low": 4, "Medium": 176, "High": 33, "Date": "2012-08-29", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 2, "Medium": 177, "High": 34, "Date": "2012-08-30", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 178, "High": 31, "Date": "2012-08-31", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 5, "Medium": 184, "High": 24, "Date": "2012-09-01", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 7, "Medium": 183, "High": 23, "Date": "2012-09-02", "Percentage": 0.107981220657277}, {"Missing Value": 5, "Low": 4, "Medium": 177, "High": 32, "Date": "2012-09-03", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 3, "Medium": 170, "High": 40, "Date": "2012-09-04", "Percentage": 0.18779342723004694}, {"Missing Value": 5, "Low": 2, "Medium": 182, "High": 29, "Date": "2012-09-05", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 2, "Medium": 179, "High": 32, "Date": "2012-09-06", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 3, "Medium": 184, "High": 26, "Date": "2012-09-07", "Percentage": 0.12206572769953052}, {"Missing Value": 5, "Low": 4, "Medium": 181, "High": 28, "Date": "2012-09-08", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 9, "Medium": 173, "High": 31, "Date": "2012-09-09", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 6, "Medium": 174, "High": 33, "Date": "2012-09-10", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 4, "Medium": 172, "High": 37, "Date": "2012-09-11", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 1, "Medium": 182, "High": 30, "Date": "2012-09-12", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 5, "Medium": 185, "High": 22, "Date": "2012-09-13", "Percentage": 0.10377358490566038}, {"Missing Value": 5, "Low": 6, "Medium": 185, "High": 22, "Date": "2012-09-14", "Percentage": 0.10328638497652583}, {"Missing Value": 5, "Low": 3, "Medium": 172, "High": 38, "Date": "2012-09-15", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 3, "Medium": 178, "High": 32, "Date": "2012-09-16", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 3, "Medium": 184, "High": 26, "Date": "2012-09-17", "Percentage": 0.12206572769953052}, {"Missing Value": 5, "Low": 3, "Medium": 181, "High": 29, "Date": "2012-09-18", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 5, "Medium": 176, "High": 32, "Date": "2012-09-19", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 4, "Medium": 181, "High": 28, "Date": "2012-09-20", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 2, "Medium": 182, "High": 29, "Date": "2012-09-21", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 6, "Medium": 177, "High": 29, "Date": "2012-09-22", "Percentage": 0.13679245283018868}, {"Missing Value": 5, "Low": 5, "Medium": 184, "High": 24, "Date": "2012-09-23", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 1, "Medium": 177, "High": 35, "Date": "2012-09-24", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 5, "Medium": 179, "High": 29, "Date": "2012-09-25", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 3, "Medium": 178, "High": 32, "Date": "2012-09-26", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 4, "Medium": 169, "High": 40, "Date": "2012-09-27", "Percentage": 0.18779342723004694}, {"Missing Value": 5, "Low": 4, "Medium": 175, "High": 34, "Date": "2012-09-28", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 188, "High": 21, "Date": "2012-09-29", "Percentage": 0.09859154929577464}, {"Missing Value": 5, "Low": 5, "Medium": 174, "High": 34, "Date": "2012-09-30", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 179, "High": 30, "Date": "2012-10-01", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 4, "Medium": 181, "High": 28, "Date": "2012-10-02", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 2, "Medium": 176, "High": 35, "Date": "2012-10-03", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 6, "Medium": 170, "High": 37, "Date": "2012-10-04", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 7, "Medium": 174, "High": 32, "Date": "2012-10-05", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 6, "Medium": 182, "High": 25, "Date": "2012-10-06", "Percentage": 0.11737089201877934}, {"Missing Value": 5, "Low": 6, "Medium": 161, "High": 46, "Date": "2012-10-07", "Percentage": 0.215962441314554}, {"Missing Value": 5, "Low": 3, "Medium": 186, "High": 24, "Date": "2012-10-08", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 3, "Medium": 172, "High": 37, "Date": "2012-10-09", "Percentage": 0.17452830188679244}, {"Missing Value": 5, "Low": 5, "Medium": 172, "High": 36, "Date": "2012-10-10", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 5, "Medium": 186, "High": 22, "Date": "2012-10-11", "Percentage": 0.10328638497652583}, {"Missing Value": 5, "Low": 3, "Medium": 183, "High": 27, "Date": "2012-10-12", "Percentage": 0.1267605633802817}, {"Missing Value": 5, "Low": 5, "Medium": 167, "High": 41, "Date": "2012-10-13", "Percentage": 0.19248826291079812}, {"Missing Value": 5, "Low": 2, "Medium": 181, "High": 30, "Date": "2012-10-14", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 4, "Medium": 176, "High": 33, "Date": "2012-10-15", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 2, "Medium": 176, "High": 35, "Date": "2012-10-16", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 6, "Medium": 183, "High": 24, "Date": "2012-10-17", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 8, "Medium": 169, "High": 36, "Date": "2012-10-18", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 2, "Medium": 189, "High": 22, "Date": "2012-10-19", "Percentage": 0.10328638497652583}, {"Missing Value": 5, "Low": 4, "Medium": 171, "High": 38, "Date": "2012-10-20", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 5, "Medium": 169, "High": 39, "Date": "2012-10-21", "Percentage": 0.18309859154929578}, {"Missing Value": 5, "Low": 3, "Medium": 178, "High": 32, "Date": "2012-10-22", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 6, "Medium": 179, "High": 28, "Date": "2012-10-23", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 5, "Medium": 179, "High": 29, "Date": "2012-10-24", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 6, "Medium": 175, "High": 32, "Date": "2012-10-25", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 5, "Medium": 181, "High": 27, "Date": "2012-10-26", "Percentage": 0.1267605633802817}, {"Missing Value": 5, "Low": 2, "Medium": 178, "High": 33, "Date": "2012-10-27", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 5, "Medium": 178, "High": 30, "Date": "2012-10-28", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 3, "Medium": 182, "High": 27, "Date": "2012-10-29", "Percentage": 0.12735849056603774}, {"Missing Value": 5, "Low": 6, "Medium": 173, "High": 33, "Date": "2012-10-30", "Percentage": 0.15566037735849056}, {"Missing Value": 5, "Low": 5, "Medium": 187, "High": 21, "Date": "2012-10-31", "Percentage": 0.09859154929577464}, {"Missing Value": 5, "Low": 3, "Medium": 169, "High": 41, "Date": "2012-11-01", "Percentage": 0.19248826291079812}, {"Missing Value": 5, "Low": 6, "Medium": 180, "High": 27, "Date": "2012-11-02", "Percentage": 0.1267605633802817}, {"Missing Value": 5, "Low": 5, "Medium": 173, "High": 35, "Date": "2012-11-03", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 1, "Medium": 184, "High": 28, "Date": "2012-11-04", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 6, "Medium": 182, "High": 25, "Date": "2012-11-05", "Percentage": 0.11737089201877934}, {"Missing Value": 5, "Low": 3, "Medium": 179, "High": 31, "Date": "2012-11-06", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 4, "Medium": 175, "High": 34, "Date": "2012-11-07", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 180, "High": 29, "Date": "2012-11-08", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 4, "Medium": 177, "High": 32, "Date": "2012-11-09", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 4, "Medium": 178, "High": 31, "Date": "2012-11-10", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 4, "Medium": 180, "High": 29, "Date": "2012-11-11", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 3, "Medium": 176, "High": 34, "Date": "2012-11-12", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 3, "Medium": 181, "High": 29, "Date": "2012-11-13", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 3, "Medium": 179, "High": 30, "Date": "2012-11-14", "Percentage": 0.14150943396226415}, {"Missing Value": 5, "Low": 4, "Medium": 188, "High": 21, "Date": "2012-11-15", "Percentage": 0.09859154929577464}, {"Missing Value": 5, "Low": 4, "Medium": 175, "High": 34, "Date": "2012-11-16", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 6, "Medium": 171, "High": 36, "Date": "2012-11-17", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 1, "Medium": 175, "High": 37, "Date": "2012-11-18", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 6, "Medium": 178, "High": 29, "Date": "2012-11-19", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 4, "Medium": 171, "High": 38, "Date": "2012-11-20", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 4, "Medium": 183, "High": 26, "Date": "2012-11-21", "Percentage": 0.12206572769953052}, {"Missing Value": 5, "Low": 3, "Medium": 181, "High": 29, "Date": "2012-11-22", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 4, "Medium": 177, "High": 32, "Date": "2012-11-23", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 4, "Medium": 172, "High": 37, "Date": "2012-11-24", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 1, "Medium": 174, "High": 38, "Date": "2012-11-25", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 3, "Medium": 180, "High": 30, "Date": "2012-11-26", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 4, "Medium": 177, "High": 31, "Date": "2012-11-27", "Percentage": 0.14622641509433962}, {"Missing Value": 5, "Low": 2, "Medium": 184, "High": 26, "Date": "2012-11-29", "Percentage": 0.12264150943396226}, {"Missing Value": 5, "Low": 3, "Medium": 177, "High": 33, "Date": "2012-11-30", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 4, "Medium": 173, "High": 36, "Date": "2012-12-01", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 2, "Medium": 183, "High": 28, "Date": "2012-12-02", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 3, "Medium": 182, "High": 28, "Date": "2012-12-03", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 6, "Medium": 169, "High": 38, "Date": "2012-12-04", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 3, "Medium": 175, "High": 35, "Date": "2012-12-05", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 2, "Medium": 179, "High": 32, "Date": "2012-12-06", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 4, "Medium": 177, "High": 32, "Date": "2012-12-07", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 7, "Medium": 170, "High": 36, "Date": "2012-12-08", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 3, "Medium": 174, "High": 36, "Date": "2012-12-09", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 1, "Medium": 181, "High": 31, "Date": "2012-12-10", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 4, "Medium": 181, "High": 28, "Date": "2012-12-11", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 5, "Medium": 180, "High": 28, "Date": "2012-12-12", "Percentage": 0.13145539906103287}, {"Missing Value": 5, "Low": 4, "Medium": 176, "High": 33, "Date": "2012-12-13", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 5, "Medium": 178, "High": 30, "Date": "2012-12-14", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 4, "Medium": 183, "High": 26, "Date": "2012-12-15", "Percentage": 0.12206572769953052}, {"Missing Value": 5, "Low": 5, "Medium": 183, "High": 24, "Date": "2012-12-16", "Percentage": 0.11320754716981132}, {"Missing Value": 5, "Low": 3, "Medium": 167, "High": 43, "Date": "2012-12-17", "Percentage": 0.20187793427230047}, {"Missing Value": 5, "Low": 5, "Medium": 185, "High": 23, "Date": "2012-12-18", "Percentage": 0.107981220657277}, {"Missing Value": 5, "Low": 4, "Medium": 185, "High": 24, "Date": "2012-12-19", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 1, "Medium": 174, "High": 38, "Date": "2012-12-20", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 3, "Medium": 174, "High": 36, "Date": "2012-12-21", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 7, "Medium": 172, "High": 34, "Date": "2012-12-22", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 176, "High": 33, "Date": "2012-12-23", "Percentage": 0.15492957746478872}, {"Missing Value": 5, "Low": 4, "Medium": 174, "High": 35, "Date": "2012-12-24", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 4, "Medium": 180, "High": 29, "Date": "2012-12-25", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 2, "Medium": 184, "High": 27, "Date": "2012-12-26", "Percentage": 0.1267605633802817}, {"Missing Value": 5, "Low": 4, "Medium": 179, "High": 30, "Date": "2012-12-27", "Percentage": 0.14084507042253522}, {"Missing Value": 5, "Low": 5, "Medium": 171, "High": 37, "Date": "2012-12-28", "Percentage": 0.17370892018779344}, {"Missing Value": 5, "Low": 5, "Medium": 177, "High": 31, "Date": "2012-12-29", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 5, "Medium": 177, "High": 31, "Date": "2012-12-30", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 4, "Medium": 174, "High": 34, "Date": "2012-12-31", "Percentage": 0.16037735849056603}, {"Missing Value": 5, "Low": 2, "Medium": 187, "High": 23, "Date": "2013-01-01", "Percentage": 0.10849056603773585}, {"Missing Value": 5, "Low": 2, "Medium": 175, "High": 36, "Date": "2013-01-02", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 6, "Medium": 173, "High": 34, "Date": "2013-01-03", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 178, "High": 31, "Date": "2013-01-04", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 2, "Medium": 188, "High": 23, "Date": "2013-01-05", "Percentage": 0.107981220657277}, {"Missing Value": 5, "Low": 3, "Medium": 165, "High": 45, "Date": "2013-01-06", "Percentage": 0.2112676056338028}, {"Missing Value": 5, "Low": 4, "Medium": 186, "High": 23, "Date": "2013-01-07", "Percentage": 0.107981220657277}, {"Missing Value": 5, "Low": 2, "Medium": 177, "High": 34, "Date": "2013-01-08", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 4, "Medium": 184, "High": 25, "Date": "2013-01-09", "Percentage": 0.11737089201877934}, {"Missing Value": 5, "Low": 3, "Medium": 188, "High": 22, "Date": "2013-01-10", "Percentage": 0.10328638497652583}, {"Missing Value": 5, "Low": 2, "Medium": 184, "High": 27, "Date": "2013-01-11", "Percentage": 0.1267605633802817}, {"Missing Value": 5, "Low": 5, "Medium": 173, "High": 35, "Date": "2013-01-12", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 4, "Medium": 175, "High": 34, "Date": "2013-01-13", "Percentage": 0.1596244131455399}, {"Missing Value": 5, "Low": 5, "Medium": 177, "High": 31, "Date": "2013-01-14", "Percentage": 0.14553990610328638}, {"Missing Value": 5, "Low": 3, "Medium": 182, "High": 27, "Date": "2013-01-15", "Percentage": 0.12735849056603774}, {"Missing Value": 5, "Low": 6, "Medium": 171, "High": 36, "Date": "2013-01-16", "Percentage": 0.16901408450704225}, {"Missing Value": 5, "Low": 7, "Medium": 180, "High": 26, "Date": "2013-01-17", "Percentage": 0.12206572769953052}, {"Missing Value": 5, "Low": 3, "Medium": 181, "High": 29, "Date": "2013-01-18", "Percentage": 0.13615023474178403}, {"Missing Value": 5, "Low": 3, "Medium": 178, "High": 32, "Date": "2013-01-19", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 4, "Medium": 185, "High": 24, "Date": "2013-01-20", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 3, "Medium": 185, "High": 25, "Date": "2013-01-21", "Percentage": 0.11737089201877934}, {"Missing Value": 5, "Low": 2, "Medium": 173, "High": 38, "Date": "2013-01-22", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 3, "Medium": 172, "High": 38, "Date": "2013-01-23", "Percentage": 0.1784037558685446}, {"Missing Value": 5, "Low": 2, "Medium": 179, "High": 32, "Date": "2013-01-24", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 6, "Medium": 175, "High": 32, "Date": "2013-01-25", "Percentage": 0.15023474178403756}, {"Missing Value": 5, "Low": 4, "Medium": 184, "High": 25, "Date": "2013-01-26", "Percentage": 0.11737089201877934}, {"Missing Value": 5, "Low": 2, "Medium": 187, "High": 24, "Date": "2013-01-27", "Percentage": 0.11267605633802817}, {"Missing Value": 5, "Low": 6, "Medium": 172, "High": 35, "Date": "2013-01-28", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 4, "Medium": 176, "High": 32, "Date": "2013-01-29", "Percentage": 0.1509433962264151}, {"Missing Value": 5, "Low": 2, "Medium": 176, "High": 35, "Date": "2013-01-30", "Percentage": 0.1643192488262911}, {"Missing Value": 5, "Low": 4, "Medium": 189, "High": 20, "Date": "2013-01-31", "Percentage": 0.09389671361502347}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
